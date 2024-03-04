@@ -1,10 +1,5 @@
+import { DeleteButtonProps } from "@/lib/definitions";
 import React from "react";
-
-// Define the props type
-interface DeleteButtonProps {
-  todoId: number | string;
-  onDeleteSuccess: (todoId: number | string) => void;
-}
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({
   todoId,

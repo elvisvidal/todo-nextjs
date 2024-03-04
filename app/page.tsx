@@ -3,12 +3,7 @@
 import React, { useEffect, useState } from "react";
 import AddTodo from "@/components/AddTodo";
 import TodoList from "@/components/TodoList";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { Todo } from "@/lib/definitions";
 
 const Home: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]);

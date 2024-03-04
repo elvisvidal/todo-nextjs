@@ -1,11 +1,6 @@
 import React from "react";
 import DeleteButton from "@/components/DeleteButton";
-
-interface Todo {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { Todo } from "@/lib/definitions";
 
 const TodoList: React.FC<{
   todos: Todo[];
