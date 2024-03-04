@@ -1,5 +1,5 @@
 import React from "react";
-import DeleteButton from "./DeleteButton";
+import DeleteButton from "@/components/DeleteButton";
 
 interface Todo {
   id: number;
