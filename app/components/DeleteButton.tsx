@@ -10,16 +10,15 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ todoId }) => {
       const response = await fetch(`/api/todo/${todoId}`, {
         method: "DELETE",
       });
-      if (response.ok) {
-        onDelete(todoId);
-      } else {
-        throw new Error("Failed to delete the todo.");
-      }
+      if (!response.ok) throw new Error("Failed to delete todo.");
+
+      onDelete(todoId);
     } catch (error) {
-      // If error is an instance of Error, display its message. Otherwise, display a generic error message.
-      const errorMessage =
-        error instanceof Error ? error.message : "An error occurred";
-      console.error("Error deleting todo:", errorMessage);
+      const errorObj = {
+        type: "error",
+        message: "Failed to delete todo. Please try again later.",
+      };
+      alert(errorObj.message);
     }
   };
 

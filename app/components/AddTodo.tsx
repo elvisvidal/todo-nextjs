@@ -7,13 +7,24 @@ const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isFormValid) return;
-    await fetch("/api/todo", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title }),
-    });
-    setTitle("");
-    onAdd();
+
+    try {
+      const response = await fetch("/api/todo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title }),
+      });
+      if (!response.ok) throw new Error("Failed to add todo.");
+
+      setTitle("");
+      onAdd();
+    } catch (error) {
+      const errorObj = {
+        type: "error",
+        message: "Failed to add todo. Please try again later.",
+      };
+      alert(errorObj.message);
+    }
   };
 
   useEffect(() => {

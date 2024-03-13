@@ -13,17 +13,16 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ todo }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ title: todo.title, completed: !completed }),
       });
+      if (!response.ok) throw new Error("Failed to complete todo.");
 
-      if (response.ok) {
-        setCompleted(!completed);
-        onCompleted(todo.id);
-      } else {
-        throw new Error("Failed to delete the todo.");
-      }
+      setCompleted(!completed);
+      onCompleted(todo.id);
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An error occurred";
-      console.error("Error deleting todo:", errorMessage);
+      const errorObj = {
+        type: "error",
+        message: "Failed to complete todo. Please try again later.",
+      };
+      alert(errorObj.message);
     }
   };
 

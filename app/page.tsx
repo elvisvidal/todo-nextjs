@@ -21,9 +21,19 @@ const Home: React.FC = () => {
   };
 
   const fetchTodos = async () => {
-    const res = await fetch("/api/todo");
-    const data = await res.json();
-    setTodos(data);
+    try {
+      const response = await fetch("/api/todo");
+      if (!response.ok) throw new Error("Failed to load todos.");
+
+      const data = await response.json();
+      setTodos(data);
+    } catch (error) {
+      const errorObj = {
+        type: "error",
+        message: "Failed to load todos. Please try again later.",
+      };
+      alert(errorObj.message);
+    }
   };
 
   useEffect(() => {

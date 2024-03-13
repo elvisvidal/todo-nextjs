@@ -16,14 +16,17 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
 
       try {
         const response = await fetch(`/api/todo/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch the todo item");
-        }
+        if (!response.ok) throw new Error("Failed to load todo.");
+
         const data = await response.json();
         setTitle(data.title);
         setCompleted(data.completed);
       } catch (error) {
-        console.error(error);
+        const errorObj = {
+          type: "error",
+          message: "Failed to load todo. Please try again later.",
+        };
+        alert(errorObj.message);
       }
     };
 
@@ -36,14 +39,25 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
-    await fetch(`/api/todo/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, completed }),
-    });
-    setTitle("");
-    router.push("/");
+    if (!isFormValid) return;
+
+    try {
+      const response = await fetch(`/api/todo/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title, completed }),
+      });
+      if (!response.ok) throw new Error("Failed to edit todo.");
+
+      setTitle("");
+      router.push("/");
+    } catch (error) {
+      const errorObj = {
+        type: "error",
+        message: "Failed to edit todo. Please try again later.",
+      };
+      alert(errorObj.message);
+    }
   };
 
   return (
