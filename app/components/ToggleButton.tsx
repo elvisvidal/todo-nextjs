@@ -1,8 +1,10 @@
 import { ToggleButtonProps } from "@/lib/definitions";
-import React, { useState } from "react";
+import EventContext from "@/utils/EventContext";
+import React, { useContext, useState } from "react";
 
-const ToggleButton: React.FC<ToggleButtonProps> = ({ todo, onCompleted }) => {
+const ToggleButton: React.FC<ToggleButtonProps> = ({ todo }) => {
   const [completed, setCompleted] = useState(todo.completed);
+  const { onCompleted } = useContext(EventContext);
 
   const handleToggle = async () => {
     try {

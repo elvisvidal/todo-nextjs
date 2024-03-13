@@ -6,10 +6,8 @@ export type Todo = {
 
 export type DeleteButtonProps = {
   todoId: number | string;
-  onDeleteSuccess: (todoId: number | string) => void;
 };
 
 export type ToggleButtonProps = {
   todo: Todo;
-  onCompleted: (todoId: number | string) => void;
 };

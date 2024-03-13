@@ -6,9 +6,7 @@ import ToggleButton from "@/components/ToggleButton";
 
 const TodoList: React.FC<{
   todos: Todo[];
-  onCompleted: (todoId: number | string) => void;
-  onDeleteSuccess: (todoId: number | string) => void;
-}> = ({ todos, onCompleted, onDeleteSuccess }) => {
+}> = ({ todos }) => {
   return (
     <div className="mt-4">
       {todos.map((todo) => (
@@ -19,9 +17,9 @@ const TodoList: React.FC<{
           <p className={`flex-1 ${todo.completed ? "line-through" : ""}`}>
             {todo.title}
           </p>
-          <ToggleButton todo={todo} onCompleted={onCompleted} />
+          <ToggleButton todo={todo} />
           <EditLink todoId={todo.id} />
-          <DeleteButton todoId={todo.id} onDeleteSuccess={onDeleteSuccess} />
+          <DeleteButton todoId={todo.id} />
         </div>
       ))}
     </div>

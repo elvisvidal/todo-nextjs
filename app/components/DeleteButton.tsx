@@ -1,17 +1,17 @@
 import { DeleteButtonProps } from "@/lib/definitions";
-import React from "react";
+import EventContext from "@/utils/EventContext";
+import React, { useContext } from "react";
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({
-  todoId,
-  onDeleteSuccess,
-}) => {
+const DeleteButton: React.FC<DeleteButtonProps> = ({ todoId }) => {
+  const { onDelete } = useContext(EventContext);
+
   const handleDelete = async () => {
     try {
       const response = await fetch(`/api/todo/${todoId}`, {
         method: "DELETE",
       });
       if (response.ok) {
-        onDeleteSuccess(todoId);
+        onDelete(todoId);
       } else {
         throw new Error("Failed to delete the todo.");
       }
