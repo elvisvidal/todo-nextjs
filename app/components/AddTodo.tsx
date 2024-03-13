@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
   const [title, setTitle] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!isFormValid) return;
     await fetch("/api/todo", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -14,6 +15,10 @@ const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
     setTitle("");
     onAdd();
   };
+
+  useEffect(() => {
+    setIsFormValid(title.trim() !== "");
+  }, [title]);
 
   return (
     <form className="flex gap-2" onSubmit={handleSubmit}>
@@ -27,7 +32,13 @@ const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
       />
       <button
         type="submit"
-        className="rounded bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-700"
+        className={`rounded px-4 py-2 text-white shadow
+        ${
+          isFormValid
+            ? "bg-blue-500 hover:bg-blue-700"
+            : "cursor-not-allowed bg-gray-500"
+        }
+        `}
       >
         Add
       </button>

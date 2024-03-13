@@ -8,6 +8,7 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [completed, setCompleted] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -28,6 +29,10 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
 
     fetchTodo();
   }, [id]);
+
+  useEffect(() => {
+    setIsFormValid(title.trim() !== "");
+  }, [title]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,9 +62,15 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
         />
         <button
           type="submit"
-          className="rounded bg-blue-500 px-4 py-2 text-white shadow hover:bg-blue-700"
+          className={`rounded px-4 py-2 text-white shadow
+        ${
+          isFormValid
+            ? "bg-blue-500 hover:bg-blue-700"
+            : "cursor-not-allowed bg-gray-500"
+        }
+        `}
         >
-          Save
+          Add
         </button>
       </form>
     </div>
