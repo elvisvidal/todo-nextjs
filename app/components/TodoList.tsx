@@ -8,11 +8,12 @@ const TodoList: React.FC<{
   todos: Todo[];
 }> = ({ todos }) => {
   return (
-    <div className="mt-4">
+    <div className="todo-list mt-4">
       {todos.map((todo) => (
         <div
           key={todo.id}
-          className="flex items-center gap-2 border-b border-gray-200 p-2"
+          className={`todo-item flex items-center gap-2 border-b border-gray-200 p-2
+          ${todo.completed ? "completed" : ""}`}
         >
           <p className={`flex-1 ${todo.completed ? "line-through" : ""}`}>
             {todo.title}

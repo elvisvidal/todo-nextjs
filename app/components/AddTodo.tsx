@@ -35,7 +35,7 @@ const AddTodo: React.FC<{ onAdd: () => void }> = ({ onAdd }) => {
     <form className="flex gap-2" onSubmit={handleSubmit}>
       <input
         type="text"
-        className="flex-1 rounded border border-gray-300 p-2 text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="new-todo-input flex-1 rounded border border-gray-300 p-2 text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Add new todo"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
