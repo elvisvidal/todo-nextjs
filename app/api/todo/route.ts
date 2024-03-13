@@ -4,7 +4,16 @@ const prisma = new PrismaClient();
 
 export async function GET() {
   try {
-    const todos = await prisma.todo.findMany();
+    const todos = await prisma.todo.findMany({
+      orderBy: [
+        {
+          completed: "asc",
+        },
+        {
+          createdAt: "desc",
+        },
+      ],
+    });
     return new Response(JSON.stringify(todos), { status: 200 });
   } catch (error) {
     return new Response("Failed to fetch todos.", { status: 500 });
