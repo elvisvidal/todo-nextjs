@@ -28,7 +28,7 @@ export async function PUT(req: Request, params: { params: { id: string } }) {
     const data = await req.json();
     const updatedTodo = await prisma.todo.update({
       where: { id: parseInt(params.params.id) },
-      data: { title: data.title },
+      data: { title: data.title, completed: data.completed },
     });
     return new Response(JSON.stringify(updatedTodo), { status: 200 });
   } catch (error) {

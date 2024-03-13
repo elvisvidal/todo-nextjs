@@ -12,6 +12,13 @@ const Home: React.FC = () => {
     setTodos(todos.filter((todo) => todo.id !== todoId));
   };
 
+  const toggleCompleted = (todoId: number | string) => {
+    const newTodos = todos.map((todo) =>
+      todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+    );
+    setTodos(newTodos);
+  };
+
   const fetchTodos = async () => {
     const res = await fetch("/api/todo");
     const data = await res.json();
@@ -26,7 +33,11 @@ const Home: React.FC = () => {
     <div className="mx-auto max-w-4xl px-4">
       <h1 className="my-4 text-center text-2xl font-bold">Todo List</h1>
       <AddTodo onAdd={fetchTodos} />
-      <TodoList todos={todos} onDeleteSuccess={onDeleteSuccess} />
+      <TodoList
+        todos={todos}
+        onCompleted={toggleCompleted}
+        onDeleteSuccess={onDeleteSuccess}
+      />
     </div>
   );
 };

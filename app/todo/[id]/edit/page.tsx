@@ -7,6 +7,7 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
   const { id } = params;
   const router = useRouter();
   const [title, setTitle] = useState("");
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const fetchTodo = async () => {
@@ -19,6 +20,7 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
         }
         const data = await response.json();
         setTitle(data.title);
+        setCompleted(data.completed);
       } catch (error) {
         console.error(error);
       }
@@ -33,7 +35,7 @@ const EditTodoPage: React.FC<{ params: { id: string } }> = ({ params }) => {
     await fetch(`/api/todo/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, completed }),
     });
     setTitle("");
     router.push("/");
